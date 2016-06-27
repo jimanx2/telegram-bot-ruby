@@ -64,7 +64,7 @@ module Telegram
 					)
 				else
 					logger.info(
-						format("Incoming #{message.class.name} from uid=%i", message.from.id)
+						format("Incoming #{message.class.name} with attribs="%s" from uid=%i", message.inspect, message.from.id)
 					)
 				end
       end
