@@ -46,7 +46,7 @@ module Telegram
       def method_missing(method_name, *args, &block)
         endpoint = method_name.to_s
         endpoint = camelize(endpoint) if endpoint.include?('_')
-
+				
         ENDPOINTS.include?(endpoint) ? call(endpoint, *args) : super
       end
 
@@ -96,6 +96,7 @@ module Telegram
         words.join
       end
 
+			public
       def conn
         @conn ||= Faraday.new(url: 'https://api.telegram.org') do |faraday|
           faraday.request :multipart

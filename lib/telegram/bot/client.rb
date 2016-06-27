@@ -23,7 +23,7 @@ module Telegram
       def listen(&block)
         logger.info('Starting bot')
         running = true
-        Signal.trap('INT') { running = false }
+        Signal.trap('INT') { running = false; exit }
         fetch_updates(&block) while running
         exit
       end
@@ -58,9 +58,15 @@ module Telegram
       end
 
       def log_incoming_message(message)
-        logger.info(
-          format('Incoming message: text="%s" uid=%i', message, message.from.id)
-        )
+				if message.is_a? Telegram::Bot::Types::Message
+					logger.info(
+						format('Incoming message: text="%s" uid=%i gid=%i', message, message.from.id, message.chat.id)
+					)
+				else
+					logger.info(
+						format("Incoming #{message.class.name} from uid=%i", message.from.id)
+					)
+				end
       end
     end
   end
