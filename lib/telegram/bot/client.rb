@@ -1,7 +1,7 @@
 module Telegram
   module Bot
     class Client
-      attr_reader :api, :offset, :timeout
+      attr_reader :api, :offset, :timeout, :method
       attr_accessor :logger
 
       def self.run(*args, &block)
@@ -14,6 +14,7 @@ module Telegram
         @offset = options[:offset]
         @timeout = options[:timeout]
         @logger = options[:logger]
+				@method = options[:method]
       end
 
       def run
@@ -44,7 +45,7 @@ module Telegram
       private
 
       def default_options
-        { offset: 0, timeout: 20, logger: NullLogger.new, webhook: false }
+        { offset: 0, timeout: 20, logger: NullLogger.new, method: :polling }
       end
 
       def extract_message(update)
