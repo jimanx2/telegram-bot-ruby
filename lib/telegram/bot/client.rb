@@ -39,14 +39,12 @@ module Telegram
           log_incoming_message(message)
           yield message
         end
-      rescue Faraday::Error::TimeoutError
-        retry
       end
 
       private
 
       def default_options
-        { offset: 0, timeout: 20, logger: NullLogger.new }
+        { offset: 0, timeout: 20, logger: NullLogger.new, webhook: false }
       end
 
       def extract_message(update)

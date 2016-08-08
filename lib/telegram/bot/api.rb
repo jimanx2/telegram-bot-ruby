@@ -59,7 +59,17 @@ module Telegram
 
       def call(endpoint, raw_params = {})
         params = build_params(raw_params)
-        response = conn.post("/bot#{token}/#{endpoint}", params)
+				begin
+					response = conn.post("/bot#{token}/#{endpoint}", params)
+				rescue Faraday::ConnectionFailed
+					Lita.logger.error("Cannot connect to Telegram API server. Possibly network is down.")
+					Lita.logger.info("Shutting down..")
+					exit
+				rescue Faraday::TimeoutError
+					Lita.logger.error("Connection to Telegram API server lost.")
+					Lita.logger.info("Shutting down..")
+					exit
+				end
         if response.status == 200
           JSON.parse(response.body)
         else
