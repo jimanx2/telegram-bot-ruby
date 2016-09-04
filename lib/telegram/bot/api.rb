@@ -59,6 +59,7 @@ module Telegram
 
       def call(endpoint, raw_params = {})
         params = build_params(raw_params)
+				
 				begin
 					response = conn.post("/bot#{token}/#{endpoint}", params)
 				rescue Faraday::ConnectionFailed
