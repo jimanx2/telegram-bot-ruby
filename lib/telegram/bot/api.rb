@@ -71,6 +71,7 @@ module Telegram
 					Lita.logger.info("Shutting down..")
 					exit
 				end
+        
         if response.status == 200
           JSON.parse(response.body)
         else
