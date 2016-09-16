@@ -32,7 +32,7 @@ module Telegram
           logger.info("Setting up webhook.")
 					response = api.setWebhook(
 						url: @webhook_params[:url],
-						certificate: Faraday::UploadIO.new(@webhook_params[:certificate])
+						certificate: Faraday::UploadIO.new(@webhook_params[:certificate], "text/plain")
 					)
           logger.info("Telegram API Response for setWebhook: #{response}")
 					true while running
