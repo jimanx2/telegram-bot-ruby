@@ -30,10 +30,10 @@ module Telegram
 					fetch_updates(&block) while running
 				elsif @method == :webhook
           logger.info("Setting up webhook.")
-					response = api.setWebhook(
-						url: @webhook_params[:url],
-						certificate: Faraday::UploadIO.new(@webhook_params[:certificate], "text/plain")
-					)
+          apiOptions = {}
+          apiOptions[:url] = @webhook_params[:url]
+          apiOptions[:certificate] = @webhook_params[:certificate] if @webhook_params[:certificate]
+					response = api.setWebhook(apiOptions)
           logger.info("Telegram API Response for setWebhook: #{response}")
 					true while running
 				end
