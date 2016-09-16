@@ -29,10 +29,12 @@ module Telegram
 					Signal.trap('INT') { running = false; exit }
 					fetch_updates(&block) while running
 				elsif @method == :webhook
-#					api.setWebhook(
-#						url: @webhook_params[:url],
-#						certificate: Faraday::UploadIO.new(@webhook_params[:certificate])
-#					)
+          logger.info("Setting up webhook.")
+					response = api.setWebhook(
+						url: @webhook_params[:url],
+						certificate: Faraday::UploadIO.new(@webhook_params[:certificate])
+					)
+          logger.info("Telegram API Response for setWebhook: #{response}")
 					true while running
 				end
       end
