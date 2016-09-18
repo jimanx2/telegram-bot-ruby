@@ -76,6 +76,14 @@ module Telegram
 					logger.info(
 						format('Incoming message: text="%s" uid=%i gid=%i', message, message.from.id, message.chat.id)
 					)
+				elsif message.is_a? Telegram::Bot::Types::CallbackQuery
+					logger.info(
+						format('Incoming callback query: text="%s" uid=%i gid=%i mid=%i', message.data, message.from.id, message.message.chat.id, message.message.message_id)
+					)
+				elsif message.is_a? Telegram::Bot::Types::InlineQuery
+					logger.info(
+						format('Incoming inline query: text="%s" gid=%i', message.query, message.message.chat.id)	
+					)
 				else
 					logger.info(
 						format(
